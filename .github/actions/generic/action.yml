@@ -15,15 +15,15 @@ runs:
     - name: Run work.sh
       shell: bash
       run: |
-        chmod +x ./work.sh
-        ./work.sh "${{ inputs.my_input }}"
+        chmod +x ${GITHUB_ACTION_PATH}//work.sh
+        ${GITHUB_ACTION_PATH}/work.sh "${{ inputs.my_input }}"
       env:
         GITHUB_TOKEN: ${{ github.token }}
 
     - name: Run script.py
       shell: bash
       run: |
-        python3 ./script.py
+        python3 ${GITHUB_ACTION_PATH}/script.py
 
     - name: Upload output.json
       uses: actions/upload-artifact@v4

@@ -17,20 +17,20 @@ runs:
       uses: actions/checkout@v4
       with:
         repository: vmilosevic/actions
-        path: ${{ inputs.path }}
+        path: external_action
 
     - name: Run work.sh
       shell: bash
       run: |
-        chmod +x ${{ inputs.path }}/work.sh
-        ${{ inputs.path }}/work.sh "${{ inputs.my_input }}"
+        chmod +x external_action/work.sh
+        external_action/work.sh "${{ inputs.my_input }}"
       env:
         GITHUB_TOKEN: ${{ github.token }}
 
     - name: Run script.py
       shell: bash
       run: |
-        python3 ${{ inputs.path }}/script.py
+        python3 external_action/script.py
 
     - name: Upload output.json
       uses: actions/upload-artifact@v4

@@ -6,11 +6,10 @@ inputs:
   my_input:
     description: "An input argument for the action"
     required: true
-  inputs:
-    path:
-      description: "Working directory for action"
-      required: false
-      defualt: external_action
+  path:
+    description: "Working directory for action"
+    required: false
+    defualt: external_action
 runs:
   using: "composite"
   steps:

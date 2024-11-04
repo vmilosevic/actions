@@ -10,11 +10,12 @@ runs:
   using: "composite"
   steps:
 
-    - name: Checkout code
-      uses: actions/checkout@v4
-      with:
-        repository: vmilosevic/actions
-        path: ${GITHUB_ACTION_PATH}
+    # - name: Checkout code
+    #   uses: actions/checkout@v4
+    #   with:
+    #     repository: vmilosevic/actions
+    #     # path: ${GITHUB_ACTION_PATH}
+    #     path: .action_path
 
     - name: Debug log
       shell: bash
@@ -24,6 +25,7 @@ runs:
         echo GITHUB_ACTION_PATH = ${GITHUB_ACTION_PATH}
         ls -la
         ls -la ${GITHUB_ACTION_PATH}
+
     - name: Run work.sh
       shell: bash
       run: |

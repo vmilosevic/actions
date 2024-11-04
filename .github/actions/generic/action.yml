@@ -11,6 +11,9 @@ runs:
   steps:
     - name: Checkout code
       uses: actions/checkout@v4
+      with:
+        repository: vmilosevic/actions
+        path: ${GITHUB_ACTION_PATH}
 
     - name: Run work.sh
       shell: bash

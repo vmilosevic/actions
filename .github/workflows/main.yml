@@ -12,6 +12,8 @@ jobs:
   test-execute-action:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
       - name: Run custom execute action
         uses: ./.github/actions/generic
         with:

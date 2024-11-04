@@ -1,0 +1,36 @@
+# .github/actions/execute-action/action.yml
+
+name: "Execute Work and Python Script"
+description: "Runs work.sh to fetch workflow info and script.py to generate output.csv, then uploads both as artifacts."
+inputs:
+  my_input:
+    description: "An input argument for the action"
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Run work.sh
+      run: |
+        chmod +x ./work.sh
+        ./work.sh "${{ inputs.my_input }}"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Run script.py
+      run: |
+        python3 ./script.py
+
+    - name: Upload output.json
+      uses: actions/upload-artifact@v3
+      with:
+        name: output-json
+        path: ./output.json
+
+    - name: Upload output.csv
+      uses: actions/upload-artifact@v3
+      with:
+        name: output-csv
+        path: ./output.csv

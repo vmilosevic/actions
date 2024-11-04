@@ -1,0 +1,18 @@
+# .github/workflows/main.yml
+
+name: Test Execute Action
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  test-execute-action:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run custom execute action
+        uses: ./.github/actions/execute-action
+        with:
+          my_input: "your_input_value_here"

@@ -13,6 +13,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Run custom execute action
-        uses: ./.github/actions/execute-action
+        uses: ./.github/actions/generic
         with:
-          my_input: "your_input_value_here"
+          my_input: "Lorme_ipsum"

@@ -6,6 +6,8 @@ inputs:
   my_input:
     description: "An input argument for the action"
     required: true
+env:
+  action_path: external_action
 runs:
   using: "composite"
   steps:
@@ -13,20 +15,20 @@ runs:
       uses: actions/checkout@v4
       with:
         repository: vmilosevic/actions
-        path: ${GITHUB_ACTION_PATH}
+        path: ${{ env.action_path }}
 
     - name: Run work.sh
       shell: bash
       run: |
-        chmod +x ${GITHUB_ACTION_PATH}//work.sh
-        ${GITHUB_ACTION_PATH}/work.sh "${{ inputs.my_input }}"
+        chmod +x ${{ env.action_path }}/work.sh
+        ${{ env.action_path }}/work.sh "${{ inputs.my_input }}"
       env:
         GITHUB_TOKEN: ${{ github.token }}
 
     - name: Run script.py
       shell: bash
       run: |
-        python3 ${GITHUB_ACTION_PATH}/script.py
+        python3 ${{ env.action_path }}/script.py
 
     - name: Upload output.json
       uses: actions/upload-artifact@v4

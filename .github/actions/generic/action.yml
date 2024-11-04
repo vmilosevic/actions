@@ -6,31 +6,36 @@ inputs:
   my_input:
     description: "An input argument for the action"
     required: true
-  path:
-    description: "Working directory for action"
-    required: false
-    defualt: external_action
 runs:
   using: "composite"
   steps:
+
     - name: Checkout code
       uses: actions/checkout@v4
       with:
         repository: vmilosevic/actions
-        path: external_action
+        path: ${GITHUB_ACTION_PATH}
 
+    - name: Debug log
+      shell: bash
+      run: |
+        set -o xtrace
+        pwd
+        echo ${GITHUB_ACTION_PATH}
+        ls -la
+        set -x
     - name: Run work.sh
       shell: bash
       run: |
-        chmod +x external_action/work.sh
-        external_action/work.sh "${{ inputs.my_input }}"
+        chmod +x ${GITHUB_ACTION_PATH}/work.sh
+        ${GITHUB_ACTION_PATH}/work.sh "${{ inputs.my_input }}"
       env:
         GITHUB_TOKEN: ${{ github.token }}
 
     - name: Run script.py
       shell: bash
       run: |
-        python3 external_action/script.py
+        python3 ${GITHUB_ACTION_PATH}/script.py
 
     - name: Upload output.json
       uses: actions/upload-artifact@v4

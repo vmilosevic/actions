@@ -14,6 +14,11 @@ import pydantic_models
 
 
 def get_github_job_id_to_test_reports(workflow_outputs_dir, workflow_run_id: int):
+    """
+    This function searches for test reports in the artifacts directory
+    and returns a mapping of job IDs to the paths of the test reports.
+    We expect that report filename is in format `<report_name>_<job_id>.xml`.
+    """
     job_paths_map = {}
     artifacts_dir = f"{workflow_outputs_dir}/{workflow_run_id}/artifacts"
 
@@ -22,12 +27,14 @@ def get_github_job_id_to_test_reports(workflow_outputs_dir, workflow_run_id: int
     for root, _, files in os.walk(artifacts_dir):
         for file in files:
             if file.endswith(".xml"):
-
                 logger.debug(f"Found test report {file}")
-
                 file_path = pathlib.Path(root) / file
                 filename = file_path.name
-                job_id = int(filename.split(".")[-2].split("_")[-1])
+                try:
+                    job_id = int(filename.split(".")[-2].split("_")[-1])
+                except ValueError:
+                    logger.warning(f"Could not extract job ID from {filename}")
+                    continue
                 report_paths = job_paths_map.get(job_id, [])
                 report_paths.append(file_path)
                 job_paths_map[job_id] = report_paths

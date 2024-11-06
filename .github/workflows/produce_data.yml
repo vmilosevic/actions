@@ -11,6 +11,8 @@ on:
 jobs:
   produce-cicd-data:
     runs-on: ubuntu-latest
+    env:
+        GH_TOKEN: ${{ github.token }}
     steps:
 
       - name: Checkout code # Only needed for testing action in same repo
@@ -30,4 +32,4 @@ jobs:
           repository: ${{ github.repository }}
           run_id: ${{ github.event.workflow_run.id }}
           run_attempt: ${{ github.event.workflow_run.run_attempt }}
-          GH_TOKEN: ${{ github.token }}
+          # GH_TOKEN: ${{ github.token }}

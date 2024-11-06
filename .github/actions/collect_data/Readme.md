@@ -1,7 +1,44 @@
+# Collect data action
+
+This action provides the following functionality:
+- collect workflow information and test reports
+- generate JSON file with workflow data
+- upload JSON file to sftp server
+
+
+## Basic usage
+
+Add workflow that triggers on workflow_run completed event (when other pipelines finish)
+
+```
+on:
+  workflow_run:
+    workflows: # List workflow that we want to collect data for
+      - "Workflow 1"
+      - "Workflow 2"
+    types:
+      - completed
+
+jobs:
+  produce-cicd-data:
+    runs-on: ubuntu-latest
+    env:
+        GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: Collect CI/CD data
+        uses: vmilosevic/actions/.github/actions/collect_data@main
+        with:
+          repository: ${{ github.repository }}
+          run_id: ${{ github.event.workflow_run.id }}
+          run_attempt: ${{ github.event.workflow_run.run_attempt }}
+          sftp_host: <SFTP server hostname>
+          sftp_user: <SFTP server username>
+          ssh-private-key: <SSH private key>
+```
 
 # Generate Data Analytics File
 
-Scripts in the infra folder are used to automatically generate data for the analytics platform.
+Scripts are used to automatically generate data for the analytics platform.
 The workflow `produce_data.yml` is triggered upon the completion of other workflows and sends analytic data for that workflow.
 
 Steps:
@@ -13,17 +50,16 @@ Steps:
 
 To run this manually, execute the following commands from the root folder:
 ```
-./infra/download_workflow_data.sh tenstorrent/tt-forge-fe 11236784732 1
-GITHUB_EVENT_NAME=test python infra/src/generate_data.py --run_id 11236784732
+download_workflow_data.sh tenstorrent/tt-forge-fe 11236784732 1
+GITHUB_EVENT_NAME=test python src/generate_data.py --run_id 11236784732
 ```
 Where 11236784732 is the run_id of workflow we are generating data for
 
-## Running tests for infra code
+## Running tests
 
-To run infra script tests install python dependancies and run pytest.
+To run script tests install python dependancies and run pytest.
 
 ```
-cd infra
 pytest --junitxml=pytest.xml --cov-report=term-missing --cov=src
 ```
 
@@ -31,8 +67,8 @@ pytest --junitxml=pytest.xml --cov-report=term-missing --cov=src
 
 You can run the scripts locally, first to download the necesary files, and seccond one to generate report
 ```
-./infra/download_workflow_data.sh tenstorrent/tt-forge-fe 11253719387 1
-GITHUB_EVENT_NAME=test python3 infra/src/generate_data.py --run_id 11253719387
+download_workflow_data.sh tenstorrent/tt-forge-fe 11253719387 1
+GITHUB_EVENT_NAME=test python3 src/generate_data.py --run_id 11253719387
 ```
 
 ## Manually trigger data workflow

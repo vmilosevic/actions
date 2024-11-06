@@ -34,7 +34,7 @@ runs:
     - name: Collect workflow artifact and job logs
       shell: bash
       run: |
-        download_workflow_data.sh ${{ inputs.repository }} ${{ inputs.run_id }} ${{ inputs.run_attempt }}
+        ${GITHUB_ACTION_PATH}/download_workflow_data.sh ${{ inputs.repository }} ${{ inputs.run_id }} ${{ inputs.run_attempt }}
 
     - uses: actions/setup-python@v5
       with:
@@ -44,14 +44,14 @@ runs:
 
     - name: Install dependencies
       shell: bash
-      run: pip install -r requirements.txt
+      run: pip install -r ${GITHUB_ACTION_PATH}/requirements.txt
 
     - name: Create JSON
       env:
         PYTHONPATH: ${{ github.workspace }}
       shell: bash
       run: |
-        python3 src/generate_data.py --run_id ${{ inputs.run_id }}
+        python3 ${GITHUB_ACTION_PATH}/src/generate_data.py --run_id ${{ inputs.run_id }}
         # Workaround: Copy file to avoid GH upload filename limitations
         cp pipeline_${{ inputs.run_id }}*.json pipelinecopy_${{ inputs.run_id }}.json
 

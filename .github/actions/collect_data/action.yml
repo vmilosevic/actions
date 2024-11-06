@@ -20,6 +20,17 @@ runs:
   using: "composite"
   steps:
 
+    - name: Debug log
+      shell: bash
+      run: |
+        set -o xtrace
+        pwd
+        echo GITHUB_ACTION_PATH = ${GITHUB_ACTION_PATH}
+        echo "WORKING DIRECTORY"
+        ls -la
+        echo "GITHUB_ACTION_PATH"
+        ls -la ${GITHUB_ACTION_PATH}
+
     - name: Collect workflow artifact and job logs
       shell: bash
       run: |

@@ -1,4 +1,4 @@
-name: "[internal] Collect data for: ${{ github.event.workflow_run.name }}"
+name: "[internal] Collect workflow data"
 
 on:
   workflow_run:

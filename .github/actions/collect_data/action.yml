@@ -32,11 +32,13 @@ runs:
         cache-dependency-path: 'requirements.txt'
 
     - name: Install dependencies
+      shell: bash
       run: pip install -r requirements.txt
 
     - name: Create JSON
       env:
         PYTHONPATH: ${{ github.workspace }}
+      shell: bash
       run: |
         python3 src/generate_data.py --run_id ${{ inputs.run_id }}
         # Workaround: Copy file to avoid GH upload filename limitations

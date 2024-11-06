@@ -1,11 +1,10 @@
 # .github/workflows/main.yml
 
-name: Test Execute Action
+name: Main workflow
 
 on:
-  push:
-    branches:
-      - main
+  pull_request:
+    branches: [ "main" ]
   workflow_dispatch:
 
 jobs:

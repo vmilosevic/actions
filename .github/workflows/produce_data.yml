@@ -1,4 +1,4 @@
-name: "[internal] Produce analytic data"
+name: "[internal] Collect data for: ${{ github.event.workflow_run.name }}"
 
 on:
   workflow_run:
@@ -12,7 +12,11 @@ jobs:
   produce-cicd-data:
     runs-on: ubuntu-latest
     steps:
-      - name: Upload cicd data
+
+      - name: Checkout code # Only needed for testing action in same repo
+        uses: actions/checkout@v4
+
+      - name: Collect CI/CD data
         uses: ./.github/actions/collect_data
         # if: ${{ github.event_name == 'workflow_run' }}
         with:

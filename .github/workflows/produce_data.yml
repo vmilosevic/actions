@@ -12,6 +12,10 @@ jobs:
   produce-cicd-data:
     runs-on: ubuntu-latest
     steps:
+
+      - name: Checkout code # Only needed for testing action in same repo
+        uses: actions/checkout@v4
+
       - name: Collect CI/CD data
         uses: ./.github/actions/collect_data
         # if: ${{ github.event_name == 'workflow_run' }}

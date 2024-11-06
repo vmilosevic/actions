@@ -36,6 +36,10 @@ runs:
       run: |
         ${GITHUB_ACTION_PATH}/download_workflow_data.sh ${{ inputs.repository }} ${{ inputs.run_id }} ${{ inputs.run_attempt }}
 
+        # Debug
+        cat generated/cicd/${{ inputs.run_id }}/workflow.json
+        cat generated/cicd/${{ inputs.run_id }}/workflow_jobs.json
+
     - uses: actions/setup-python@v5
       with:
         python-version: '3.8'

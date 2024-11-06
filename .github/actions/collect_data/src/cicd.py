@@ -30,9 +30,11 @@ def create_cicd_json_for_data_analysis(
     github_pipeline_json_filename,
     github_jobs_json_filename,
 ):
+    logger.info(f"Load pipeline info from: {github_pipeline_json_file}")
     with open(github_pipeline_json_filename) as github_pipeline_json_file:
         github_pipeline_json = json.load(github_pipeline_json_file)
 
+    logger.info(f"Load jobs info from: {github_pipeline_json_file}")
     with open(github_jobs_json_filename) as github_jobs_json_file:
         github_jobs_json = json.load(github_jobs_json_file)
 

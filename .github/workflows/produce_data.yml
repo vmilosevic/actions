@@ -20,15 +20,14 @@ jobs:
         shell: bash
         run: |
           echo "Event name: ${{ github.event_name }}"
-          echo "Workflow run repository: ${{ github.event.workflow_run.repository }}"
-          echo "Workflow run run_id: ${{ github.event.workflow_run.run_id }}"
+          echo "Workflow run repository: ${{ github.event.workflow_run.id }}"
           echo "Workflow run run_attempt: ${{ github.event.workflow_run.run_attempt }}"
 
       - name: Collect CI/CD data
         uses: ./.github/actions/collect_data
         if: ${{ github.event_name == 'workflow_run' }}
         with:
-          repository: ${{ github.event.workflow_run.repository }}
-          run_id: ${{ github.event.workflow_run.run_id }}
+          repository: ${{ github.repository }}
+          run_id: ${{ github.event.workflow_run.id }}
           run_attempt: ${{ github.event.workflow_run.run_attempt }}
           GH_TOKEN: ${{ github.token }}

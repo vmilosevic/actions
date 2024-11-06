@@ -16,9 +16,17 @@ jobs:
       - name: Checkout code # Only needed for testing action in same repo
         uses: actions/checkout@v4
 
+      - name: Debug
+        shell: bash
+        run: |
+          echo "Event name: ${{ github.event_name }}"
+          echo "Workflow run repository: ${{ github.event.workflow_run.repository }}"
+          echo "Workflow run run_id: ${{ github.event.workflow_run.run_id }}"
+          echo "Workflow run run_attempt: ${{ github.event.workflow_run.run_attempt }}"
+
       - name: Collect CI/CD data
         uses: ./.github/actions/collect_data
-        # if: ${{ github.event_name == 'workflow_run' }}
+        if: ${{ github.event_name == 'workflow_run' }}
         with:
           repository: ${{ github.event.workflow_run.repository }}
           run_id: ${{ github.event.workflow_run.run_id }}

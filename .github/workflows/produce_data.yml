@@ -3,7 +3,8 @@ name: "[internal] Produce analytic data"
 on:
   workflow_run:
     workflows: # List workflow that we want to collect data for
-      - "Test Execute Action"
+      - "Main workflow"
+      - "Test Collect Data Action"
     types:
       - completed
 

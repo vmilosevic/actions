@@ -1,6 +1,6 @@
 # .github/workflows/main.yml
 
-name: Test Execute Action
+name: Main workflow
 
 on:
   pull_request:

@@ -12,7 +12,7 @@ jobs:
   produce-cicd-data:
     runs-on: ubuntu-latest
     steps:
-      - name: Upload cicd data
+      - name: Collect CI/CD data
         uses: ./.github/actions/collect_data
         # if: ${{ github.event_name == 'workflow_run' }}
         with:
